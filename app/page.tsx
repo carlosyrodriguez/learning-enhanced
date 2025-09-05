@@ -96,18 +96,22 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <header className="border-b border-border bg-card/80 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-2">
+      <header className="border-b border-border bg-card/60 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <Brain className="h-4 w-4 text-foreground" />
+              <Brain className="h-5 w-5 text-foreground" />
             </div>
             <div className="flex items-center gap-3">
-              {user ? (
+              {isLoading ? (
+                // Render a placeholder to prevent layout shift while checking auth
+                <div className="h-9 w-48 animate-pulse rounded-md bg-muted" />
+              ) : user ? (
+                // Logged-in view
                 <>
                   <Link href="/leaderboard">
                     <span className="text-sm text-foreground hover:text-muted-foreground transition-colors cursor-pointer flex items-center gap-2">
-                      <Trophy className="h-4 w-4" />
+                      <Trophy className="h-5 w-5" />
                       Leaderboard
                     </span>
                   </Link>
@@ -126,10 +130,11 @@ export default function HomePage() {
                   </span>
                 </>
               ) : (
+                // Logged-out view
                 <>
                   <Link href="/leaderboard">
                     <span className="text-sm text-foreground hover:text-muted-foreground transition-colors cursor-pointer flex items-center gap-2">
-                      <Trophy className="h-4 w-4" />
+                      <Trophy className="h-5 w-5" />
                       Leaderboard
                     </span>
                   </Link>
@@ -138,7 +143,7 @@ export default function HomePage() {
                     onClick={() => setShowAuthModal(true)}
                     className="text-sm text-foreground hover:text-muted-foreground transition-colors cursor-pointer flex items-center gap-2"
                   >
-                    <LogIn className="h-4 w-4" />
+                    <LogIn className="h-5 w-5" />
                   </span>
                 </>
               )}
@@ -148,23 +153,11 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <main className="container mx-auto px-4 py-12 flex-grow">
-        {/* Apple-style hero section with dotted background image */}
-        <div className="relative mb-16 rounded-3xl overflow-hidden">
-          {/* Background Image with Overlays */}
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{
-              backgroundImage: `url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Black_and_White_Small_Dots_Pattern_generated.jpg-60tnQITLNVfmFiTCUrRjzkhOHNV7u6.jpeg')`,
-            }}
-          />
-          {/* Black overlay with opacity */}
-          <div className="absolute inset-0 bg-black/40" />
-          {/* Gradient overlay fading from bottom to top */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-
-          {/* Content */}
-          <div className="relative z-10 px-8 py-24 md:py-32 text-center">
+      <main className="container mx-auto px-4 py-8 flex-grow">
+        {/* ... Hero Section content ... */}
+        <div className="relative mb-12 rounded-3xl overflow-hidden">
+          <div className="relative z-10 px-8 py-6 md:py-28 text-center">
+            <Card className="absolute inset-0 -z-10 bg-gradient-to-br from-gray-800 to-gray-900" />
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">Learn Programming</h1>
             <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto font-medium">
               Master coding through interactive typing
@@ -195,7 +188,8 @@ export default function HomePage() {
             platform provides instant feedback, error correction, and structured lessons that build both coding
             knowledge and muscle memory.
           </p>
-          {user && (
+          {/* --- FIX #2 START: Added isLoading check to user stats --- */}
+          {!isLoading && user && (
             <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4 mb-8">
               <div className="flex items-center justify-center gap-6 text-sm">
                 <div className="text-center">
@@ -213,39 +207,41 @@ export default function HomePage() {
               </div>
             </div>
           )}
+          {/* --- FIX #2 END --- */}
         </div>
-
-        {/* Features */}
+        
+        {/* ... Rest of your component (Features, Learning Paths, etc.) ... */}
+         {/* Features */}
         <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12">
           <Card className="text-center">
             <CardContent className="pt-6">
               <Code className="h-8 w-8 text-blue-400 mx-auto mb-2" />
-              <h3 className="font-semibold mb-1 text-foreground">GitHub Projects</h3>
-              <p className="text-sm text-muted-foreground">Learn from real repositories</p>
+              <CardTitle className="text-base font-semibold">GitHub Projects</CardTitle>
+              <CardDescription className="text-sm">Learn from real repositories</CardDescription>
             </CardContent>
           </Card>
 
           <Card className="text-center">
             <CardContent className="pt-6">
               <Brain className="h-8 w-8 text-purple-400 mx-auto mb-2" />
-              <h3 className="font-semibold mb-1 text-foreground">AI-Generated Lessons</h3>
-              <p className="text-sm text-muted-foreground">Learniing paths based on real projects</p>
+              <CardTitle className="text-base font-semibold">AI-Generated Lessons</CardTitle>
+              <CardDescription className="text-sm">Learning paths based on real projects</CardDescription>
             </CardContent>
           </Card>
 
           <Card className="text-center">
             <CardContent className="pt-6">
               <Target className="h-8 w-8 text-green-400 mx-auto mb-2" />
-              <h3 className="font-semibold mb-1 text-foreground">Character-by-Character</h3>
-              <p className="text-sm text-muted-foreground">Type every character correctly</p>
+              <CardTitle className="text-base font-semibold">Character-by-Character</CardTitle>
+              <CardDescription className="text-sm">Type every character correctly</CardDescription>
             </CardContent>
           </Card>
 
           <Card className="text-center">
             <CardContent className="pt-6">
               <Trophy className="h-8 w-8 text-orange-400 mx-auto mb-2" />
-              <h3 className="font-semibold mb-1 text-foreground">Progress Tracking</h3>
-              <p className="text-sm text-muted-foreground">Compete on the leaderboard</p>
+              <CardTitle className="text-base font-semibold">Progress Tracking</CardTitle>
+              <CardDescription className="text-sm">Compete on the leaderboard</CardDescription>
             </CardContent>
           </Card>
         </div>

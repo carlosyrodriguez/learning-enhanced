@@ -1,10 +1,12 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { generateText } from "ai"
-import { openai } from "@ai-sdk/openai"
+import { type NextRequest, NextResponse } from "next/server";
+import { generateText } from "ai";
+// highlight-start
+import { google } from "@ai-sdk/google";
+// highlight-end
 
 export async function POST(request: NextRequest) {
   try {
-    const { projectData, githubUrl } = await request.json()
+    const { projectData, githubUrl } = await request.json();
 
     const prompt = `
 You are an expert programming instructor. Analyze this GitHub repository and create step-by-step instructions for a beginner to rebuild it from scratch.
@@ -40,18 +42,20 @@ Return the response as a JSON object with this structure:
     }
   ]
 }
-`
+`;
 
+    // highlight-start
     const { text } = await generateText({
-      model: openai("gpt-4o"),
+      model: google("models/gemini-1.5-flash-latest"),
       prompt,
       temperature: 0.7,
-    })
+    });
+    // highlight-end
 
     // Parse the JSON response
-    let instructions
+    let instructions;
     try {
-      instructions = JSON.parse(text)
+      instructions = JSON.parse(text);
     } catch (parseError) {
       // Fallback if JSON parsing fails
       instructions = {
@@ -76,18 +80,18 @@ Return the response as a JSON object with this structure:
             type: "setup",
           },
         ],
-      }
+      };
     }
 
-    return NextResponse.json(instructions)
+    return NextResponse.json(instructions);
   } catch (error) {
-    console.error("Error generating instructions:", error)
+    console.error("Error generating instructions:", error);
     return NextResponse.json(
       {
         error: "Failed to generate instructions",
         instructions: [],
       },
       { status: 500 },
-    )
+    );
   }
 }

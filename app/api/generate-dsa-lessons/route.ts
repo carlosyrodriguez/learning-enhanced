@@ -1,6 +1,8 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { generateText } from "ai"
-import { openai } from "@ai-sdk/openai"
+import { type NextRequest, NextResponse } from "next/server";
+import { generateText } from "ai";
+// highlight-start
+import { google } from "@ai-sdk/google";
+// highlight-end
 
 const DSA_LESSONS = {
   arrays: [
@@ -109,7 +111,8 @@ while (current !== null) {
     {
       id: 1,
       title: "Stack Implementation using Array",
-      description: "Implement a stack data structure with push, pop, and peek operations",
+      description:
+        "Implement a stack data structure with push, pop, and peek operations",
       code: `// Stack implementation
 class Stack {
     constructor() {
@@ -155,17 +158,17 @@ console.log("Popped:", stack.pop());`,
       spaceComplexity: "O(n) where n is number of elements",
     },
   ],
-}
+};
 
 export async function POST(request: NextRequest) {
   try {
-    const { topicId, topicTitle } = await request.json()
+    const { topicId, topicTitle } = await request.json();
 
     // Return predefined lessons if available
     if (DSA_LESSONS[topicId as keyof typeof DSA_LESSONS]) {
       return NextResponse.json({
         lessons: DSA_LESSONS[topicId as keyof typeof DSA_LESSONS],
-      })
+      });
     }
 
     // Generate lessons using AI for other topics
@@ -189,17 +192,19 @@ Focus on practical, typeable code examples that build understanding progressivel
 Make the code realistic and educational, not just toy examples.
 
 Return as JSON: { "lessons": [...] }
-`
+`;
 
+    // highlight-start
     const { text } = await generateText({
-      model: openai("gpt-4o"),
+      model: google("models/gemini-1.5-flash-latest"),
       prompt,
       temperature: 0.3,
-    })
+    });
+    // highlight-end
 
-    let lessons
+    let lessons;
     try {
-      lessons = JSON.parse(text)
+      lessons = JSON.parse(text);
     } catch (parseError) {
       // Fallback lesson
       lessons = {
@@ -211,16 +216,21 @@ Return as JSON: { "lessons": [...] }
             code: `// ${topicTitle} Example\nconsole.log("Learning ${topicTitle}");`,
             explanation: `This lesson introduces you to ${topicTitle} concepts.`,
             objectives: [`Understand ${topicTitle} basics`],
-            keyPoints: [`${topicTitle} is an important data structure/algorithm`],
+            keyPoints: [
+              `${topicTitle} is an important data structure/algorithm`,
+            ],
             tips: ["Practice regularly to master the concepts"],
           },
         ],
-      }
+      };
     }
 
-    return NextResponse.json(lessons)
+    return NextResponse.json(lessons);
   } catch (error) {
-    console.error("Error generating DSA lessons:", error)
-    return NextResponse.json({ error: "Failed to generate lessons", lessons: [] }, { status: 500 })
+    console.error("Error generating DSA lessons:", error);
+    return NextResponse.json(
+      { error: "Failed to generate lessons", lessons: [] },
+      { status: 500 },
+    );
   }
 }

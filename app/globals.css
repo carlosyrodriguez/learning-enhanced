@@ -4,33 +4,32 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* iOS Dark Mode inspired color scheme with blueish gray tones */
-  --background: oklch(0.08 0.005 240); /* Much darker background with minimal blue tint */
-  --foreground: oklch(0.98 0.005 240); /* Pure white text */
-  --card: oklch(0.12 0.01 240); /* Darker cards with less blue */
+  --background: oklch(0.08 0.005 240); 
+  --foreground: oklch(0.98 0.005 240); 
+  --card: oklch(0.12 0.01 240); 
   --card-foreground: oklch(0.98 0.005 240);
   --popover: oklch(0.12 0.01 240);
   --popover-foreground: oklch(0.98 0.005 240);
-  --primary: oklch(0.6 0.15 212); /* iOS blue accent */
+  --primary: oklch(0.6 0.15 212); 
   --primary-foreground: oklch(0.98 0.005 240);
-  --secondary: oklch(0.15 0.01 240); /* Much darker secondary with less blue */
-  --secondary-foreground: oklch(0.9 0.005 240); /* Lighter text for better contrast */
-  --muted: oklch(0.13 0.01 240); /* Darker muted with less blue */
-  --muted-foreground: oklch(0.75 0.01 240); /* Much lighter muted text */
-  --accent: oklch(0.18 0.015 240); /* Darker accent with less blue */
+  --secondary: oklch(0.15 0.01 240); 
+  --secondary-foreground: oklch(0.9 0.005 240); 
+  --muted: oklch(0.13 0.01 240);
+  --muted-foreground: oklch(0.75 0.01 240); 
+  --accent: oklch(0.18 0.015 240); 
   --accent-foreground: oklch(0.98 0.005 240);
-  --destructive: oklch(0.55 0.2 15); /* iOS red */
+  --destructive: oklch(0.55 0.2 15); 
   --destructive-foreground: oklch(0.98 0.005 240);
-  --border: oklch(0.25 0.015 240); /* Darker borders with less blue */
-  --input: oklch(0.13 0.01 240); /* Darker input fields with less blue */
-  --ring: oklch(0.6 0.15 212); /* iOS blue focus ring */
+  --border: oklch(0.25 0.015 240); 
+  --input: oklch(0.13 0.01 240); 
+  --ring: oklch(0.6 0.15 212); 
   --chart-1: oklch(0.6 0.15 212);
   --chart-2: oklch(0.65 0.15 140);
   --chart-3: oklch(0.7 0.15 60);
   --chart-4: oklch(0.6 0.15 300);
   --chart-5: oklch(0.65 0.15 30);
-  --radius: 0.75rem; /* iOS-like rounded corners */
-  --sidebar: oklch(0.1 0.01 240); /* Darker sidebar with less blue */
+  --radius: 0.75rem; 
+  --sidebar: oklch(0.1 0.01 240); 
   --sidebar-foreground: oklch(0.98 0.005 240);
   --sidebar-primary: oklch(0.6 0.15 212);
   --sidebar-primary-foreground: oklch(0.98 0.005 240);
@@ -38,11 +37,10 @@
   --sidebar-accent-foreground: oklch(0.9 0.005 240);
   --sidebar-border: oklch(0.25 0.015 240);
   --sidebar-ring: oklch(0.6 0.15 212);
-  --font-jetbrains-mono: "JetBrains Mono", monospace; /* JetBrains Mono font family for coding */
+  --font-jetbrains-mono: "JetBrains Mono", monospace; 
 }
 
 .dark {
-  /* Same as root for consistent iOS dark mode */
   --background: oklch(0.08 0.005 240);
   --foreground: oklch(0.98 0.005 240);
   --card: oklch(0.12 0.01 240);
@@ -75,7 +73,7 @@
   --sidebar-accent-foreground: oklch(0.9 0.005 240);
   --sidebar-border: oklch(0.25 0.015 240);
   --sidebar-ring: oklch(0.6 0.15 212);
-  --font-jetbrains-mono: "JetBrains Mono", monospace; /* JetBrains Mono font family for coding */
+  --font-jetbrains-mono: "JetBrains Mono", monospace; 
 }
 
 @theme inline {
@@ -124,14 +122,12 @@
   }
   body {
     @apply bg-background text-foreground;
-    /* Added iOS-like smooth transitions and backdrop blur support */
     transition: background-color 0.2s ease, color 0.2s ease;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-family: var(--font-jetbrains-mono); /* Applying JetBrains Mono font family */
+    font-family: var(--font-jetbrains-mono); 
   }
 
-  /* Added iOS-like scrollbar styling */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;

@@ -70,7 +70,7 @@ Focus on practical, typeable code examples that build understanding progressivel
 
     try {
       const { text } = await generateText({
-        model: openai("gpt-4o"),
+        model: openai("gpt-4o-mini"),
         prompt,
         temperature: 0.3,
         maxTokens: 3000, // Reduced for faster response
